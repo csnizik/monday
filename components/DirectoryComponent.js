@@ -1,36 +1,36 @@
-import React, { Component } from "react";
-import { View, FlatList } from "react-native";
-import { Tile } from "react-native-elements";
-import { connect } from "react-redux";
-import { baseUrl } from "../shared/baseUrl";
-import Loading from "./LoadingComponent";
+import React, { Component } from 'react';
+import { View, FlatList, Text } from 'react-native';
+import { Tile } from 'react-native-elements';
+import { connect } from 'react-redux';
+import { baseUrl } from '../shared/baseUrl';
+import Loading from './LoadingComponent';
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
     return {
-        campsites: state.campsites,
+        campsites: state.campsites
     };
 };
 
 class Directory extends Component {
+
     static navigationOptions = {
-        title: "Directory",
-    };
+        title: 'Directory'
+    }
 
     render() {
         const { navigate } = this.props.navigation;
-        const renderDirectoryItem = ({ item }) => {
+        const renderDirectoryItem = ({item}) => {
             return (
                 <Tile
                     title={item.name}
                     caption={item.description}
                     featured
-                    onPress={() =>
-                        navigate("CampsiteInfo", { campsiteId: item.id })
-                    }
-                    imageSrc={{ uri: baseUrl + item.image }}
+                    onPress={() => navigate('CampsiteInfo', { campsiteId: item.id })}
+                    imageSrc={{uri: baseUrl + item.image}}
                 />
             );
         };
+
         if (this.props.campsites.isLoading) {
             return <Loading />;
         }
@@ -45,7 +45,7 @@ class Directory extends Component {
             <FlatList
                 data={this.props.campsites.campsites}
                 renderItem={renderDirectoryItem}
-                keyExtractor={(item) => item.id.toString()}
+                keyExtractor={item => item.id.toString()}
             />
         );
     }
